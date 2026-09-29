@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
       - name: Fetch all branches and tags
-        run: git fetch origin '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*' --prune --force
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*' '+refs/tags/*:refs/tags/*' --prune --force
       - name: Push to Gitee
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
@@ -24,5 +24,5 @@ jobs:
           git config user.name "sync-bot"
           git config user.email "sync-bot@users.noreply.github.com"
           git remote add gitee "https://flying_high:${GITEE_TOKEN}@gitee.com/flying_high/ComfyUI.git"
-          git push gitee --all --force
+          git push gitee 'refs/remotes/origin/*:refs/heads/*' --force
           git push gitee --tags --force
